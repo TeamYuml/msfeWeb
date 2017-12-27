@@ -34,11 +34,12 @@ class Login_controller extends CI_Controller {
             $imie_nazwisko = $row->imieLekarz.' '.$row->nazwiskoLekarz;
             $user_data = array(
                 'user_loged' => TRUE,
-                'imie_nazwisko_loged' => $imie_nazwisko
+                'imie_nazwisko_loged' => $imie_nazwisko,
+                'id_loged' => $row->idLekarz
             );
 
             $this->session->set_userdata($user_data);
-            $this->load->view('Loged_view');
+            redirect('System_controller/Patient_show');
         } catch (Exception $e) {
             echo $e->getMessage();
         }

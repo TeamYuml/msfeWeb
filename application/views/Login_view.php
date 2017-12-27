@@ -46,7 +46,7 @@
       
             <?php
         //    echo form_open('user/register_show');
-            echo anchor('login_controller/register_show', 'Rejestracja');
+    //            echo anchor('login_controller/register_show', 'Rejestracja');
             ?>
             
         </div>
