@@ -36,7 +36,7 @@ class login_model extends CI_Model {
         $this->db->from('lekarzmsfe');
         $this->db->where("loginLekarz", $user);
         $query = $this->db->get();
-        
+
         return $query;
     }
 
@@ -95,6 +95,81 @@ class login_model extends CI_Model {
         );
         // performing insert
         $this->db->insert('lekarzmsfe', $lekarz);
+    }
+
+    public function patientshow() {
+        $id = $this->session->userdata('id_loged');
+        $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser');
+        $this->db->from('usermsfe as d, userconnect as p ');
+        $this->db->where('d.idUser = p.idUser');
+        $this->db->where(array('p.idLekarz' => $id,
+            'd.isActiveUser' => 1));
+        $query = $this->db->get();
+        $de = $query->result();
+        return $de;
+    }
+
+    public function Deletedpatient($id_delete) {
+
+        $this->db->where(array('idUser' => $id_delete));
+        $d = $this->db->delete('userconnect');
+
+        $this->db->where(array('idUser' => $id_delete));
+        $this->db->set(array('isActiveUser' => 0));
+        $up = $this->db->update('usermsfe');
+
+        $res = array('update' => $up,
+            'delete' => $d);
+        return $res;
+    }
+
+    public function Search_P() {
+        $this->db->select('*');
+        $this->db->from('usermsfe');
+        $this->db->where(array('PESELUser' => $this->input->post('szukaj')));
+        $query = $this->db->get();
+        $de = $query->result();
+        return $de;
+    }
+
+    public function Patient_info_m() {
+        $this->db->select('*');
+        $this->db->from('usermsfe');
+        $this->db->where(array('idUser' => $this->input->post('info')));
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result;
+    }
+
+    public function Patientadd_m($gen_password) {
+        $hashedPassword = $this->hashPassword($gen_password);
+        $patinet = array(
+            'imieUser' => $this->input->post('imie'),
+            'nazwiskoUser' => $this->input->post('nazwisko'),
+            'emailUser' => $this->input->post('login'),
+            'hasloUser' => $hashedPassword,
+            'adresUser' => $this->input->post('adres'),
+            'PESELUser' => $this->input->post('pesel'),
+            'telefonUser' => $this->input->post('telefon')
+        );
+        $this->db->insert('usermsfe', $patinet);
+    }
+
+    public function NewUserid_m($to_add) {
+        $this->db->select('idUser');
+        $this->db->from('usermsfe');
+        $this->db->where(array('PESELUser' => $to_add));
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result;
+    }
+
+    public function ConnectUser_m($newid) {
+        $patientconnect = array(
+            'idUser' => $newid,
+            'idLekarz' => $this->session->userdata('id_loged')
+        );
+        $this->db->insert('userconnect', $patientconnect);
     }
 
 }
