@@ -28,7 +28,8 @@
             );
             $passwordaha = array(
                 'name' => 'password',
-                'placeholder' => 'Hasło'
+                'placeholder' => 'Hasło',
+                'type' => 'password'
             );
             $button = array(
                 'name' => 'login_button',

@@ -126,7 +126,8 @@ class login_model extends CI_Model {
     public function Search_P() {
         $this->db->select('*');
         $this->db->from('usermsfe');
-        $this->db->where(array('PESELUser' => $this->input->post('szukaj')));
+        $this->db->where(array('PESELUser' => $this->input->post('szukaj'),
+            'isActiveUser' => 1));
         $query = $this->db->get();
         $de = $query->result();
         return $de;
@@ -171,9 +172,10 @@ class login_model extends CI_Model {
         );
         $this->db->insert('userconnect', $patientconnect);
     }
-    
-     public function get_events($start, $end) {
-        return $this->db->where("start >=", $start)->where("end <=", $end)->get("calendar_events");
+
+    public function get_events($start, $end) {
+
+        return $this->db->where(array('IDUser' => $this->session->userdata('user_loged_h')))->get("calendar_events");
     }
 
     public function add_event($data) {

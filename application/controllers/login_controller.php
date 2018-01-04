@@ -4,16 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login_controller extends CI_Controller {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
-    public function index() {
-        $this->load->view('Login_view');
-    }
-
     public function login_show() {
-        $this->load->view('Login_view');
+        if (($this->session->userdata('user_loged') === TRUE)) {
+            redirect("System_controller/Patient_show");
+        } else {
+
+            $this->load->view('Login_view');
+        }
     }
 
     public function login() {
@@ -31,7 +28,7 @@ class Login_controller extends CI_Controller {
 
             if (!password_verify($password, $row->hasloLekarz))
                 throw new UnexpectedValueException("Invalid password!");
-            $imie_nazwisko = $row->imieLekarz.' '.$row->nazwiskoLekarz;
+            $imie_nazwisko = $row->imieLekarz . ' ' . $row->nazwiskoLekarz;
             $user_data = array(
                 'user_loged' => TRUE,
                 'imie_nazwisko_loged' => $imie_nazwisko,
@@ -85,8 +82,8 @@ class Login_controller extends CI_Controller {
             }
         }
     }
-    
-    public function Logout(){
+
+    public function Logout() {
         $this->session->unset_userdata('imie_nazwisko_loged');
         $this->session->unset_userdata('user_loged');
         $this->session->sess_destroy();
