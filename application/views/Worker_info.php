@@ -22,7 +22,7 @@ and open the template in the editor.
                 if ($this->session->userdata('user_loged') === TRUE) {
                     echo $this->session->userdata('imie_nazwisko_loged');
                 }
-                echo anchor('System_controller/Patient_show', 'Powrót');
+                echo anchor('System_controller/Worker_show', 'Powrót');
                 ?> </p>
             <div class="logout ">
                 <?php
@@ -36,14 +36,10 @@ and open the template in the editor.
                 <div class="table">
                     <table  style="width:100%">
                         <tr class="head">
-                            <?php
-                            if ($this->session->userdata('id_loged') == 62) {
-                                echo '<th>ID</th>';
-                            }
-                            ?>
+                            <th>ID</th>
                             <th>Imię</th>
                             <th>Nazwisko</th> 
-                            <th>Adres</th>
+                            <th>Miejsce pracy</th>
                             <th>Pesel</th>
                             <th>E-mail</th>
                             <th>Telefon</th>
@@ -53,20 +49,16 @@ and open the template in the editor.
                             echo '<div class="alert alert-danger"> <label>' . $msg . '</label></div>';
                         } else {
 
-                            foreach ($patient as $u):
+                            foreach ($worker as $u):
                                 ?>
                                 <tr class="conten">
-                                    <?php
-                                    if ($this->session->userdata('id_loged') == 62) {
-                                        echo "<td>" . $u->idUser . "</td>";
-                                    }
-                                    ?>
-                                    <td><?php echo $u->imieUser; ?></td>
-                                    <td><?php echo $u->nazwiskoUser; ?></td>
-                                    <td><?php echo $u->adresUser; ?></td>
-                                    <td><?php echo $u->PESELUser; ?></td>
-                                    <td><?php echo $u->emailUser; ?></td>
-                                    <td><?php echo $u->telefonUser; ?></td>
+                                    <td><?php echo $u->idLekarz; ?></td>
+                                    <td><?php echo $u->imieLekarz; ?></td>
+                                    <td><?php echo $u->nazwiskoLekarz; ?></td>
+                                    <td><?php echo $u->miejscepracyLekarz; ?></td>
+                                    <td><?php echo $u->pesel; ?></td>
+                                    <td><?php echo $u->loginLekarz; ?></td>
+                                    <td><?php echo $u->telefonLekarza; ?></td>
 
 
 

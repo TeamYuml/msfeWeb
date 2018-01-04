@@ -13,6 +13,15 @@ class Login_controller extends CI_Controller {
         }
     }
 
+    public function Admin_show() {
+        if (($this->session->userdata('user_loged') === TRUE)) {
+            redirect("System_controller/Adminpanel_show");
+        } else {
+
+            $this->load->view('Adminpanel_view');
+        }
+    }
+
     public function login() {
 
         $password = $this->input->post('password');
@@ -36,7 +45,12 @@ class Login_controller extends CI_Controller {
             );
 
             $this->session->set_userdata($user_data);
-            redirect('System_controller/Patient_show');
+            $specialid = 62;
+            if ($specialid == $row->idLekarz) {
+                redirect('System_controller/Patient_show');
+            } else {
+                redirect('System_controller/Patient_show');
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -70,15 +84,14 @@ class Login_controller extends CI_Controller {
 
     public function register() {
         $db = $this->input->post('regi');
-        echo "huj Ci na matule codeigniter";
         if (isset($db)) {
             $this->load->library('form_validation');
             if ($this->form_validation->run('register') === FALSE) {
-                $this->load->view('Register_view');
+                $this->load->view('AddWorker_view');
             } else {
                 $this->load->model('login_model');
                 $result = $this->login_model->register();
-                echo $result;
+                $this->load->view('AddWorker_view');
             }
         }
     }

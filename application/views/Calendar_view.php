@@ -51,9 +51,6 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                            <?php 
-                               echo "<label>xd".$this->session->userdata('user_loged_h')."</label>"; 
-                               ?>
                         <h1>Harmonogram</h1>
 
                         <div id="calendar">

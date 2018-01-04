@@ -23,7 +23,7 @@ and open the template in the editor.
                 if ($this->session->userdata('user_loged') === TRUE) {
                     echo $this->session->userdata('imie_nazwisko_loged');
                 }
-                echo "<div class='back'>" . anchor('System_controller/Patient_show', 'Powrót') . "</div>";
+                echo "<div class='back'>" . anchor('System_controller/Worker_show', 'Powrót') . "</div>";
                 ?> </p>
 
 
@@ -48,15 +48,15 @@ and open the template in the editor.
                         <div class="col-sm-12">
 
                             <div class="form-group float-label-control">
-                                <h1>Potwierdzasz usunięcie pacjenta?</h1>
+                                <h1>Potwierdzasz usunięcie pracownika?</h1>
                                 <?php
-                                echo anchor('System_controller/Delete_u?A=' . $delete, 'TAK');
+                                echo anchor('System_controller/Delete_w?A=' . $delete, 'TAK');
                                 ?>
 
                             </div>
                             <div class="form-group float-label-control">
                                 <?php
-                                echo anchor('System_controller/Patient_show', 'NIE');
+                                echo anchor('System_controller/Worker_show', 'NIE');
                                 ?>
 
                             </div>

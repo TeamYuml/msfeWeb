@@ -99,11 +99,27 @@ class login_model extends CI_Model {
 
     public function patientshow() {
         $id = $this->session->userdata('id_loged');
-        $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser');
+        $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser, d.isActiveUser');
         $this->db->from('usermsfe as d, userconnect as p ');
         $this->db->where('d.idUser = p.idUser');
         $this->db->where(array('p.idLekarz' => $id,
             'd.isActiveUser' => 1));
+        $query = $this->db->get();
+        $de = $query->result();
+        return $de;
+    }
+
+    public function patientshow_a() {
+        $this->db->select('*');
+        $this->db->from('usermsfe');
+        $query = $this->db->get();
+        $de = $query->result();
+        return $de;
+    }
+
+    public function workershow() {
+        $this->db->select('*');
+        $this->db->from('lekarzmsfe');
         $query = $this->db->get();
         $de = $query->result();
         return $de;
@@ -123,6 +139,20 @@ class login_model extends CI_Model {
         return $res;
     }
 
+    public function Deletedworker($id_delete) {
+
+        $this->db->where(array('idLekarz' => $id_delete));
+        $d = $this->db->delete('userconnect');
+
+        $this->db->where(array('idLekarz' => $id_delete));
+        $this->db->set(array('isActiveLekarz' => 0));
+        $up = $this->db->update('lekarzmsfe');
+
+        $res = array('update' => $up,
+            'delete' => $d);
+        return $res;
+    }
+
     public function Search_P() {
         $this->db->select('*');
         $this->db->from('usermsfe');
@@ -132,11 +162,37 @@ class login_model extends CI_Model {
         $de = $query->result();
         return $de;
     }
+      public function Search_U() {
+        $this->db->select('*');
+        $this->db->from('usermsfe');
+        $this->db->where(array('PESELUser' => $this->input->post('szukaj')));
+        $query = $this->db->get();
+        $de = $query->result();
+        return $de;
+    }
+    
+      public function Search_W() {
+       $this->db->select('*');
+        $this->db->from('lekarzmsfe');
+        $this->db->where(array('pesel' => $this->input->post('szukaj')));
+        $query = $this->db->get();
+        $de = $query->result();
+        return $de;
+    }
 
     public function Patient_info_m() {
         $this->db->select('*');
         $this->db->from('usermsfe');
         $this->db->where(array('idUser' => $this->input->post('info')));
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result;
+    }
+
+    public function Worker_info_m() {
+        $this->db->select('*');
+        $this->db->from('lekarzmsfe');
+        $this->db->where(array('idLekarz' => $this->input->post('info')));
         $query = $this->db->get();
         $result = $query->result();
         return $result;
@@ -192,6 +248,31 @@ class login_model extends CI_Model {
 
     public function delete_event($id) {
         $this->db->where("ID", $id)->delete("calendar_events");
+    }
+
+    public function Przywroc_worker($id) {
+       /* $this->db->where
+        UPDATE lekarzmsfe
+        SET isActiveLekarz = 1
+        WHERE idLekarz = 62
+        * 
+        */
+
+        $this->db->where(array('idLekarz' => $id));
+        $this->db->set(array('isActiveLekarz' => 1));
+        $up = $this->db->update('lekarzmsfe');
+
+        $res = array('update' => $up);
+        return $res;
+    }
+    
+     public function Przywroc_patient($id) {
+        $this->db->where(array('idUser' => $id));
+        $this->db->set(array('isActiveUser' => 1));
+        $up = $this->db->update('usermsfe');
+
+        $res = array('update' => $up);
+        return $res;
     }
 
 }

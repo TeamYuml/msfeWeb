@@ -37,38 +37,39 @@ and open the template in the editor.
         </div>
 
 
-            <div class = "main">
-                <div class="container">
-                    <div class="row">
-                    </div>
 
-                    <hr />
+        <div class = "main">
+            <div class="container">
+                <div class="row">
+                </div>
 
-                    <div class="row">
-                        <div class="col-sm-12">
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
 
-                            <div class="form-group float-label-control">
-                                <h1>Potwierdzasz usunięcie pacjenta?</h1>
-                                <?php
-                                echo anchor('System_controller/Delete_u?A=' . $delete, 'TAK');
-                                ?>
-
-                            </div>
-                            <div class="form-group float-label-control">
-                                <?php
-                                echo anchor('System_controller/Patient_show', 'NIE');
-                                ?>
-
-                            </div>
-
-
-
-
+                        <div class="form-group float-label-control">
+                            <h1>Potwierdzasz usunięcie pracownika?</h1>
+                            <?php
+                            
+                            echo anchor('System_controller/Przywroc_w?A=' . $res, 'TAK');
+                            ?>
 
                         </div>
+                        <div class="form-group float-label-control">
+                            <?php
+                            echo anchor('System_controller/Worker_show', 'NIE');
+                            ?>
+
+                        </div>
+
+
+
+
+
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 </body>
