@@ -87,7 +87,17 @@ class System_controller extends CI_Controller {
         $this->load->view('DeleteConfirmW_view', $id);
     }
 
-    public function Delete_u() {
+        public function Delete_u() {
+
+        $id_delete = $this->input->get('A');
+        $this->load->model('login_model');
+        $deleted = $this->login_model->Deletedpatient($id_delete);
+        if ($deleted == true) {
+            redirect('System_controller/Patient_show', 'refresh');
+        } else {
+            show_404();
+        }
+    }
 
     public function Delete() {
 
