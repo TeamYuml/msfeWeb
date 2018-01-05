@@ -16,19 +16,7 @@ class login_model extends CI_Model {
         return $hash;
     }
 
-    /* function login() {
-      $password = $this->input->post('password');
-      $hashpassword = $this->hashPassword($password);
-      $zalogowany = $this->input->post('email');
-      $this->db->select('*');
-      $this->db->from('lekarzmsfe');
-      $this->db->where(array('loginLekarz' => $zalogowany, 'hasloLekarz' => $hashpassword));
-      $query = $this->db->get();
-      $user = $query->result();
-      return $user ? TRUE : FALSE;
-      }
-     * 
-     */
+  
 
     function login_m() {
         $user = $user = $this->input->post('email');
@@ -59,26 +47,7 @@ class login_model extends CI_Model {
         }
     }
 
-    /* public function register() {
-      // pobieranie hasla
-      $password = $this->input->post('pwd');
-      $hash = password_hash($password, PASSWORD_BCRYPT);
-      // array do insertowania do bazy danych
-      $lekarz = array(
-      'imieLekarz' => $this->input->post('imie'),
-      'nazwiskoLekarz' => $this->input->post('nazwisko'),
-      'loginLekarz' => $this->input->post('login'),
-      'hasloLekarz' => $hash,
-      'pesel' => $this->input->post('pesel'),
-      'miejscepracyLekarz' => $this->input->post('miejscePracy'),
-      'telefonLekarza' => $this->input->post('telefon')
-      );
-      // performing insert
-      $this->db->insert('lekarzmsfe', $lekarz);
-      }
-     * 
-     */
-
+    /
     public function register() {
         // pobieranie hasla
         $password = $this->input->post('pwd');
@@ -99,15 +68,23 @@ class login_model extends CI_Model {
 
     public function patientshow() {
         $id = $this->session->userdata('id_loged');
+
         $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser, d.isActiveUser');
         $this->db->from('usermsfe as d, userconnect as p ');
         $this->db->where('d.idUser = p.idUser_C');
         $this->db->where(array('p.idLekarz_C' => $id,
+
+        $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser');
+        $this->db->from('usermsfe as d, userconnect as p ');
+        $this->db->where('d.idUser = p.idUser');
+        $this->db->where(array('p.idLekarz' => $id,
+
             'd.isActiveUser' => 1));
         $query = $this->db->get();
         $de = $query->result();
         return $de;
     }
+
 
     public function patientshow_a() {
         $this->db->select('*');
@@ -128,6 +105,11 @@ class login_model extends CI_Model {
     public function Deletedpatient($id_delete) {
 
         $this->db->where(array('idUser_C' => $id_delete));
+
+    public function Deletedpatient($id_delete) {
+
+        $this->db->where(array('idUser' => $id_delete));
+
         $d = $this->db->delete('userconnect');
 
         $this->db->where(array('idUser' => $id_delete));
@@ -138,6 +120,7 @@ class login_model extends CI_Model {
             'delete' => $d);
         return $res;
     }
+
 
     public function Deletedworker($id_delete) {
 
@@ -166,11 +149,17 @@ class login_model extends CI_Model {
     public function Search_U() {
         $this->db->select('*');
         $this->db->from('usermsfe');
+
+    public function Search_P() {
+        $this->db->select('*');
+        $this->db->from('usermsfe');
+
         $this->db->where(array('PESELUser' => $this->input->post('szukaj')));
         $query = $this->db->get();
         $de = $query->result();
         return $de;
     }
+
 
     public function Search_W() {
         $this->db->select('*');
@@ -181,6 +170,8 @@ class login_model extends CI_Model {
         return $de;
     }
 
+
+
     public function Patient_info_m() {
         $this->db->select('*');
         $this->db->from('usermsfe');
@@ -190,6 +181,7 @@ class login_model extends CI_Model {
         return $result;
     }
 
+
     public function Worker_info_m() {
         $this->db->select('*');
         $this->db->from('lekarzmsfe');
@@ -198,6 +190,7 @@ class login_model extends CI_Model {
         $result = $query->result();
         return $result;
     }
+
 
     public function Patientadd_m($gen_password) {
         $hashedPassword = $this->hashPassword($gen_password);
@@ -224,11 +217,17 @@ class login_model extends CI_Model {
 
     public function ConnectUser_m($newid) {
         $patientconnect = array(
+
             'idUser_C' => $newid,
             'idLekarz_C' => $this->session->userdata('id_loged')
+
+            'idUser' => $newid,
+            'idLekarz' => $this->session->userdata('id_loged')
+
         );
         $this->db->insert('userconnect', $patientconnect);
     }
+
 
     public function get_events($start, $end) {
 
@@ -345,5 +344,6 @@ class login_model extends CI_Model {
         $query = $this->db->get();
         return $query;
     }
+
 
 }

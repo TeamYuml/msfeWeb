@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login_controller extends CI_Controller {
 
+
     public function login_show() {
         if (($this->session->userdata('user_loged') === TRUE)) {
             redirect("System_controller/Patient_show");
@@ -20,6 +21,18 @@ class Login_controller extends CI_Controller {
 
             $this->load->view('Adminpanel_view');
         }
+
+    public function __construct() {
+        parent::__construct();
+    }
+
+    public function index() {
+        $this->load->view('Login_view');
+    }
+
+    public function login_show() {
+        $this->load->view('Login_view');
+
     }
 
     public function login() {
@@ -37,7 +50,11 @@ class Login_controller extends CI_Controller {
 
             if (!password_verify($password, $row->hasloLekarz))
                 throw new UnexpectedValueException("Invalid password!");
+
             $imie_nazwisko = $row->imieLekarz . ' ' . $row->nazwiskoLekarz;
+
+            $imie_nazwisko = $row->imieLekarz.' '.$row->nazwiskoLekarz;
+
             $user_data = array(
                 'user_loged' => TRUE,
                 'imie_nazwisko_loged' => $imie_nazwisko,
@@ -45,12 +62,16 @@ class Login_controller extends CI_Controller {
             );
 
             $this->session->set_userdata($user_data);
+
             $specialid = 62;
             if ($specialid == $row->idLekarz) {
                 redirect('System_controller/Patient_show');
             } else {
                 redirect('System_controller/Patient_show');
             }
+
+            redirect('System_controller/Patient_show');
+
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -84,6 +105,7 @@ class Login_controller extends CI_Controller {
 
     public function register() {
         $db = $this->input->post('regi');
+
         if (isset($db)) {
             $this->load->library('form_validation');
             if ($this->form_validation->run('register') === FALSE) {
@@ -97,6 +119,22 @@ class Login_controller extends CI_Controller {
     }
 
     public function Logout() {
+
+
+        if (isset($db)) {
+            $this->load->library('form_validation');
+            if ($this->form_validation->run('register') === FALSE) {
+                $this->load->view('Register_view');
+            } else {
+                $this->load->model('login_model');
+                $result = $this->login_model->register();
+                echo $result;
+            }
+        }
+    }
+    
+    public function Logout(){
+
         $this->session->unset_userdata('imie_nazwisko_loged');
         $this->session->unset_userdata('user_loged');
         $this->session->sess_destroy();

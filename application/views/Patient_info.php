@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -81,5 +82,36 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <table style="width:100%">
+            <tr>
+                <th>Imię</th>
+                <th>Nazwisko</th> 
+                <th>Adres</th>
+                <th>Telefon</th>
+                <th>PESEL</th>
+                <th>E-mail</th>
+            </tr>
+            <?php
+            foreach ($patient as $u):
+                ?>
+                <tr>
+                    <td><?php echo $u->imieUser; ?></td>
+                    <td><?php echo $u->nazwiskoUser; ?></td>
+                    <td><?php echo $u->adresUser; ?></td>
+                    <td><?php echo $u->PESELUser; ?></td>
+                    <td><?php echo $u->emailUser; ?></td>
+                    <td><?php echo $u->telefonUser; ?></td>
+                </tr>
+            </table>
+        <?php endforeach;
+        echo anchor('System_controller/Patient_show', 'Powrót');
+        ?>
+
+
     </body>
 </html>
