@@ -26,6 +26,7 @@ and open the template in the editor.
             <?php
             echo anchor('System_controller/AddPatient_show', 'Dodaj pacjenta');
             echo anchor('System_controller/AddWorker_show', 'Dodaj pracownika');
+            echo anchor('System_controller/Patient_Worker', 'Przypisz');
             echo anchor('System_controller/Patient_show', 'Pacjenci');
             echo anchor('System_controller/Worker_show', 'Pracownicy');
             $search = array(

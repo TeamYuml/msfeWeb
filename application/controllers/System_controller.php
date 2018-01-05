@@ -114,8 +114,8 @@ class System_controller extends CI_Controller {
             $this->load->view('Loged_view', $result);
         }
     }
-    
-     public function SearchU() {
+
+    public function SearchU() {
         $this->load->library('form_validation');
         $this->load->model('login_model');
         if ($this->form_validation->run('search') === FALSE) {
@@ -127,8 +127,8 @@ class System_controller extends CI_Controller {
             $this->load->view('Adminpanel_view', $result);
         }
     }
-    
-     public function SearchW() {
+
+    public function SearchW() {
         $this->load->library('form_validation');
         $this->load->model('login_model');
         if ($this->form_validation->run('search') === FALSE) {
@@ -155,8 +155,8 @@ class System_controller extends CI_Controller {
     public function AddPatient_show() {
         $this->load->view('AddPatient_view');
     }
-    
-    public function AddWorker_show(){
+
+    public function AddWorker_show() {
         $this->load->view('AddWorker_view');
     }
 
@@ -395,4 +395,57 @@ class System_controller extends CI_Controller {
         }
     }
 
+    public function Patient_Worker() {
+        if (($this->session->userdata('user_loged') === TRUE)) {
+            $d['list'] = $this->login_model->AllID_list();
+            $d['list2'] = $this->login_model->getA();
+            $d['list3'] = $this->login_model->ID_L();
+            $this->load->view('Patient_Worker_view', $d);
+        } else {
+            redirect("login_controller/Login_show");
+        }
+    }
+
+    public function Connect_con() {
+        $id['res'] = $this->input->post('conn');
+        $this->load->view('Connfirm_con_view', $id);
+    }
+
+    public function Connect_res() {
+        $id = $this->input->get('A');
+        $conn = $this->login_model->Connect_res($id);
+        if ($conn == true) {
+            redirect('System_controller/Patient_Worker', 'refresh');
+        } else {
+            show_404();
+        }
+    }
+
+    public function Delete_Connect() {
+        $id['res'] = $this->input->post('delete');
+        $this->load->view('Delete_con_view', $id);
+    }
+
+    public function Delete_res() {
+        $id = $this->input->get('A');
+        $conn = $this->login_model->Delete_res($id);
+        if ($conn == true) {
+            redirect('System_controller/Patient_Worker', 'refresh');
+        } else {
+            show_404();
+        }
+    }
+
+    public function AddConnect() {
+        $idU = $this->input->post('iduser');
+        $idL = $this->input->post('idlekarz');
+
+        $check['d'] = $this->login_model->check($idU, $idL);
+        if ($check['d']->num_rows() == 1) {
+            $this->session->set_flashdata('message', 'Takie połączenie już istnieje. Sprawdź jego aktywność');
+        } else {
+            $this->login_model->AddConnect_m($idU, $idL);
+        }
+        redirect('System_controller/Patient_Worker');
+    }
 }
