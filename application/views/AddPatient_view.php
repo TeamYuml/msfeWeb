@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -123,5 +124,42 @@
                 </div>
             </div>
         </div>
+
+
+    </head>
+    <body>
+        <?php
+        echo validation_errors();
+        echo form_open('System_controller/AddPatient');
+        ?>
+        <label for="login">Email:</label>
+        <input type="text" name="login"
+               value="<?php echo set_value('login'); ?>"/>
+        <br />
+        <label for="imie">Imie:</label>
+        <input type="text" name="imie"
+               value="<?php echo set_value('imie'); ?>"/>
+        <br />
+        <label for="nazwisko">Nazwisko:</label>
+        <input type="text" name="nazwisko"
+               value="<?php echo set_value('nazwisko'); ?>"/>
+        <br />
+        <label for="adres">Adres:</label>
+        <input type="text" name="adres"
+               value="<?php echo set_value('adres'); ?>"/>
+        <br />
+        <label for="pesel">Pesel:</label>
+        <input type="text" name="pesel"
+               value="<?php echo set_value('pesel'); ?>"/>
+        <br />
+        <label for="telefon">Telefon:</label>
+        <input type="text" name="telefon"
+               value="<?php echo set_value('telefon'); ?>"/>
+        <br />
+        <input type="submit" value="Zatwierdz" name="ok"/>
+        <?php echo form_close();
+        echo anchor('System_controller/Patient_show', 'Powrót');
+        ?> 
+
     </body>
 </html>

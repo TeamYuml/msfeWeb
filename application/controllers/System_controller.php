@@ -12,7 +12,9 @@ class System_controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+
         $this->load->model('login_model');
+
     }
 
     public function Patient_list() {
@@ -20,6 +22,7 @@ class System_controller extends CI_Controller {
         $result['list'] = $this->login_model->patientshow();
         return $result['list'];
     }
+
 
     public function Patient_list_A() {
         $result['list'] = $this->login_model->patientshow_a();
@@ -64,6 +67,11 @@ class System_controller extends CI_Controller {
 
             redirect("login_controller/Login_show");
         }
+
+    public function Patient_show() {
+        $d['patient'] = $this->Patient_list();
+        $this->load->view('Loged_view', $d);
+
     }
 
     public function Delete_Confirm() {
@@ -72,13 +80,14 @@ class System_controller extends CI_Controller {
         $this->load->view('DeleteConfirm_view', $id);
     }
 
+
     public function Delete_Confirm_w() {
 
         $id['delete'] = $this->input->post('delete');
         $this->load->view('DeleteConfirmW_view', $id);
     }
 
-    public function Delete_u() {
+        public function Delete_u() {
 
         $id_delete = $this->input->get('A');
         $this->load->model('login_model');
@@ -89,6 +98,20 @@ class System_controller extends CI_Controller {
             show_404();
         }
     }
+
+    public function Delete() {
+
+
+        $id_delete = $this->input->get('A');
+        $this->load->model('login_model');
+        $deleted = $this->login_model->Deletedpatient($id_delete);
+        if ($deleted == true) {
+            redirect('System_controller/Patient_show', 'refresh');
+        } else {
+            show_404();
+        }
+    }
+
 
     public function Delete_w() {
 
@@ -114,6 +137,7 @@ class System_controller extends CI_Controller {
             $this->load->view('Loged_view', $result);
         }
     }
+
 
     public function SearchU() {
         $this->load->library('form_validation');
@@ -141,16 +165,19 @@ class System_controller extends CI_Controller {
         }
     }
 
+
     public function Patient_info() {
         $this->load->model('login_model');
         $result['patient'] = $this->login_model->Patient_info_m();
         $this->load->view('Patient_info', $result);
     }
 
+
     public function Worker_info() {
         $result['worker'] = $this->login_model->Worker_info_m();
         $this->load->view('Worker_info', $result);
     }
+
 
     public function AddPatient_show() {
         $this->load->view('AddPatient_view');
@@ -159,6 +186,7 @@ class System_controller extends CI_Controller {
     public function AddWorker_show() {
         $this->load->view('AddWorker_view');
     }
+
 
     public function Generate_haslo($chars_min = 8, $chars_max = 10, $use_upper_case = true, $include_numbers = true, $include_special_chars = false) {
         $length = rand($chars_min, $chars_max);
@@ -210,6 +238,7 @@ class System_controller extends CI_Controller {
         $this->login_model->ConnectUser_m($a);
         redirect('System_controller/Patient_show');
     }
+
 
     public function Calendar_show() {
         $this->session->unset_userdata('user_loged_h');
@@ -448,4 +477,5 @@ class System_controller extends CI_Controller {
         }
         redirect('System_controller/Patient_Worker');
     }
+
 }
