@@ -12,12 +12,18 @@ class System_controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+
         $this->load->library('form_validation');
         $this->load->model('login_model');
     }
 
     public function LoadViewUser() {
         $this->load->view('UserNavBar_view');
+
+
+        $this->load->model('login_model');
+
+
     }
 
     public function Patient_list() {
@@ -25,6 +31,7 @@ class System_controller extends CI_Controller {
         $result['list'] = $this->login_model->patientshow();
         return $result['list'];
     }
+
 
     public function Patient_list_A() {
         $result['list'] = $this->login_model->patientshow_a();
@@ -34,7 +41,9 @@ class System_controller extends CI_Controller {
     public function Worker_list() {
 
         $result['list'] = $this->login_model->workershow();
+
         $result['list2'] = $this->login_model->workerNshow();
+
         return $result['list'];
     }
 
@@ -42,11 +51,17 @@ class System_controller extends CI_Controller {
         if (($this->session->userdata('user_loged') === TRUE)) {
             if ($this->session->userdata('id_loged') == 62) {
                 $d['patient'] = $this->Patient_list_A();
+
                 $this->LoadViewUser();
                 $this->load->view('Adminpanel_view', $d);
             } else {
                 $d['patient'] = $this->Patient_list();
                 $this->LoadViewUser();
+
+                $this->load->view('Adminpanel_view', $d);
+            } else {
+                $d['patient'] = $this->Patient_list();
+
                 $this->load->view('Loged_view', $d);
             }
         } else {
@@ -57,9 +72,13 @@ class System_controller extends CI_Controller {
 
     public function Worker_show() {
         if (($this->session->userdata('user_loged') === TRUE)) {
+
             $d['worker'] = $this->login_model->workershow();
             $d['workerN'] = $this->login_model->workerNshow();
            // $d['worker'] = $this->Worker_list();
+
+            $d['worker'] = $this->Worker_list();
+
             $this->load->view('Worker_view', $d);
         } else {
             redirect("login_controller/Login_show");
@@ -74,9 +93,17 @@ class System_controller extends CI_Controller {
 
             redirect("login_controller/Login_show");
         }
+
+
+    public function Patient_show() {
+        $d['patient'] = $this->Patient_list();
+        $this->load->view('Loged_view', $d);
+
+
     }
 
     public function Delete_Confirm() {
+
 
         $id = $this->input->post('delete');
         $this->load->model('login_model');
@@ -93,19 +120,52 @@ class System_controller extends CI_Controller {
         $deleted = $this->login_model->Deletedworker($id);
         if ($deleted == true) {
             redirect('System_controller/Worker_show', 'refresh');
+
+        $id['delete'] = $this->input->post('delete');
+        $this->load->view('DeleteConfirm_view', $id);
+    }
+
+
+    public function Delete_Confirm_w() {
+
+        $id['delete'] = $this->input->post('delete');
+        $this->load->view('DeleteConfirmW_view', $id);
+    }
+
+        public function Delete_u() {
+
+        $id_delete = $this->input->get('A');
+        $this->load->model('login_model');
+        $deleted = $this->login_model->Deletedpatient($id_delete);
+        if ($deleted == true) {
+            redirect('System_controller/Patient_show', 'refresh');
+
         } else {
             show_404();
         }
     }
+
       public function Delete_Confirm_N() {
         $id = $this->input->post('delete');
         $deleted = $this->login_model->DeletedworkerN($id);
         if ($deleted == true) {
             redirect('System_controller/Worker_show', 'refresh');
+
+
+    public function Delete() {
+
+
+        $id_delete = $this->input->get('A');
+        $this->load->model('login_model');
+        $deleted = $this->login_model->Deletedpatient($id_delete);
+        if ($deleted == true) {
+            redirect('System_controller/Patient_show', 'refresh');
+
         } else {
             show_404();
         }
     }
+
 
     public function Delete_w() {
 
@@ -119,6 +179,7 @@ class System_controller extends CI_Controller {
         }
     }
 
+
     //Wyszukiwanie pacjenta z poziomu  Lekarza 
     public function SearchP() {
         if ($this->form_validation->run('search') === FALSE) {
@@ -128,6 +189,17 @@ class System_controller extends CI_Controller {
         } else {
             $result['patient'] = $this->login_model->Search_P();
             $this->LoadViewUser();
+
+    public function SearchP() {
+        $this->load->library('form_validation');
+        $this->load->model('login_model');
+        if ($this->form_validation->run('search') === FALSE) {
+            $msg_val['msg'] = 'Nie ma takiego pacjenta';
+            $this->load->view('Loged_view', $msg_val);
+        } else {
+            $this->load->model('login_model');
+            $result['patient'] = $this->login_model->Search_P();
+
             $this->load->view('Loged_view', $result);
         }
     }
@@ -143,6 +215,7 @@ class System_controller extends CI_Controller {
             $this->load->view('Patient_info', $result);
         }
     }
+
 
     public function SearchU() {
         $this->load->library('form_validation');
@@ -170,6 +243,7 @@ class System_controller extends CI_Controller {
         }
     }
 
+
     public function Patient_info() {
         $this->load->model('login_model');
         $result['patient'] = $this->login_model->Patient_info_m();
@@ -180,11 +254,12 @@ class System_controller extends CI_Controller {
         $result['worker'] = $this->login_model->Worker_info_m();
         $this->load->view('Worker_info', $result);
     }
-    
+ 
       public function Nurse_info() {
         $result['worker'] = $this->login_model->Worker_info_N();
         $this->load->view('Nurse_info', $result);
     }
+
 
     public function AddPatient_show() {
         $this->load->view('AddPatient_view');
@@ -193,6 +268,7 @@ class System_controller extends CI_Controller {
     public function AddWorker_show() {
         $this->load->view('AddWorker_view');
     }
+
 
     public function Generate_haslo($chars_min = 8, $chars_max = 10, $use_upper_case = true, $include_numbers = true, $include_special_chars = false) {
         $length = rand($chars_min, $chars_max);
@@ -266,8 +342,6 @@ class System_controller extends CI_Controller {
         $start = $this->input->get("start");
         $end = $this->input->get("end");
 
-
-
         $startdt = new DateTime('now'); // setup a local datetime
         $startdt->setTimestamp($start); // Set the date based on timestamp
         $start_format = $startdt->format('Y-m-d H:i:s');
@@ -287,8 +361,12 @@ class System_controller extends CI_Controller {
                 "title" => $r->title,
                 "description" => $r->description,
                 "end" => $r->end,
+
                 "start" => $r->start,
                 "time" => $r->CzasPodania
+
+                "start" => $r->start
+
             );
         }
 
@@ -303,9 +381,14 @@ class System_controller extends CI_Controller {
         $desc = $this->input->post("description");
         $start_date = $this->input->post("start_date");
         $end_date = $this->input->post("end_date");
+
         $time = $this->input->post('time');
 
 
+
+
+
+       
 
 
         $this->login_model->add_event(array(
@@ -313,7 +396,9 @@ class System_controller extends CI_Controller {
             "description" => $desc,
             "start" => $start_date,
             "end" => $end_date,
+
             "CzasPodania" => $time,
+
             "IDUser" => $this->session->userdata('user_loged_h')
                 )
         );
@@ -322,7 +407,10 @@ class System_controller extends CI_Controller {
     }
 
     public function edit_event() {
-        //$this->load->model('login_model');
+
+   
+
+
         $eventid = intval($this->input->post("eventid"));
         $event = $this->login_model->get_event($eventid);
         if ($event->num_rows() == 0) {
@@ -338,15 +426,43 @@ class System_controller extends CI_Controller {
         $start_date = $this->input->post("start_date");
         $end_date = $this->input->post("end_date");
         $delete = $this->input->post("delete");
+
         $time = $this->input->post('time');
 
         if (!$delete) {
+
+
+        if (!$delete) {
+
+            /* if (!empty($start_date)) {
+              $sd = DateTime::createFromFormat("Y/m/d H:i", $start_date);
+              $start_date = $sd->format('Y-m-d H:i:s');
+              $start_date_timestamp = $sd->getTimestamp();
+              } else {
+              $start_date = date("Y-m-d H:i:s", time());
+              $start_date_timestamp = time();
+              }
+
+              if (!empty($end_date)) {
+              $ed = DateTime::createFromFormat("Y/m/d H:i", $end_date);
+              $end_date = $ed->format('Y-m-d H:i:s');
+              $end_date_timestamp = $ed->getTimestamp();
+              } else {
+              $end_date = date("Y-m-d H:i:s", time());
+              $end_date_timestamp = time();
+              }
+             * 
+             */
+
+
             $this->login_model->update_event($eventid, array(
                 "title" => $name,
                 "description" => $desc,
                 "start" => $start_date,
                 "end" => $end_date,
+
                 "CzasPodania" => $time
+
                     )
             );
         } else {
@@ -357,6 +473,7 @@ class System_controller extends CI_Controller {
     }
 
     public function Przywroc_confirm_u() {
+
         $id = $this->input->post('przywroc_u');
         $id_u = $this->login_model->Przywroc_patient($id);
         if ($id_u == true) {
@@ -368,12 +485,28 @@ class System_controller extends CI_Controller {
 
     public function Przywroc_confirm_w() {
         $id = $this->input->post('przywroc_w');
+
+        $id['res'] = $this->input->post('przywroc_u');
+        $this->load->view('Przywroc_confirm', $id);
+    }
+
+    public function Przywroc_confirm_w() {
+        $id['res'] = $this->input->post('przywroc_w');
+        $this->load->view('Przywroc_confirm_w', $id);
+    }
+
+    public function Przywroc_w() {
+
+        $id = $this->input->get('A');
+        $this->load->model('login_model');
+
         $id_w = $this->login_model->Przywroc_worker($id);
         if ($id_w == true) {
             redirect('System_controller/Worker_show', 'refresh');
         } else {
             show_404();
         }
+
     }
     
       public function Przywroc_confirm_N() {
@@ -381,6 +514,17 @@ class System_controller extends CI_Controller {
         $id_w = $this->login_model->Przywroc_workerN($id);
         if ($id_w == true) {
             redirect('System_controller/Worker_show', 'refresh');
+
+       
+    }
+
+    public function Przywroc_u() {
+        $id = $this->input->get('A');
+        $this->load->model('login_model');
+        $id_u = $this->login_model->Przywroc_patient($id);
+        if ($id_u == true) {
+            redirect('System_controller/Patient_show', 'refresh');
+
         } else {
             show_404();
         }
@@ -389,11 +533,17 @@ class System_controller extends CI_Controller {
     public function Patient_Worker() {
         if (($this->session->userdata('user_loged') === TRUE)) {
 
+
             $d['test'] = $this->login_model->GetDataConnect();
             $d['list'] = $this->login_model->AllID_list();
             $d['list2'] = $this->login_model->getA();
             $d['list3'] = $this->login_model->ID_L();
             $d['list4'] = $this->login_model->IDNurse();
+
+            $d['list'] = $this->login_model->AllID_list();
+            $d['list2'] = $this->login_model->getA();
+            $d['list3'] = $this->login_model->ID_L();
+
             $this->load->view('Patient_Worker_view', $d);
         } else {
             redirect("login_controller/Login_show");
@@ -401,14 +551,25 @@ class System_controller extends CI_Controller {
     }
 
     public function Connect_con() {
+
         $id = $this->input->post('conn');
        $conn = $this->login_model->Connect_res($id);
+
+        $id['res'] = $this->input->post('conn');
+        $this->load->view('Connfirm_con_view', $id);
+    }
+
+    public function Connect_res() {
+        $id = $this->input->get('A');
+        $conn = $this->login_model->Connect_res($id);
+
         if ($conn == true) {
             redirect('System_controller/Patient_Worker', 'refresh');
         } else {
             show_404();
         }
     }
+
 
 
   
@@ -447,7 +608,7 @@ class System_controller extends CI_Controller {
                 $this->session->set_flashdata('message', 'Takie połączenie już istnieje. Sprawdź jego aktywność');
             } else {
                 $this->login_model->UpdateConnect_LPP($idU, $idL);
-                // $this->login_model->AddConnect_LPP($idU, $idL, $idN);
+            
             }
             redirect('System_controller/Patient_Worker');
         }
@@ -480,7 +641,33 @@ class System_controller extends CI_Controller {
             $this->session->set_flashdata('message', 'Takie połączenie już istnieje. Sprawdź jego aktywność');
         } else {
             echo"NOPE";
-            //$this->login_model->AddConnect_PP($idU, $idN);
+
+
+    public function Delete_Connect() {
+        $id['res'] = $this->input->post('delete');
+        $this->load->view('Delete_con_view', $id);
+    }
+
+    public function Delete_res() {
+        $id = $this->input->get('A');
+        $conn = $this->login_model->Delete_res($id);
+        if ($conn == true) {
+            redirect('System_controller/Patient_Worker', 'refresh');
+        } else {
+            show_404();
+        }
+    }
+
+    public function AddConnect() {
+        $idU = $this->input->post('iduser');
+        $idL = $this->input->post('idlekarz');
+
+        $check['d'] = $this->login_model->check($idU, $idL);
+        if ($check['d']->num_rows() == 1) {
+            $this->session->set_flashdata('message', 'Takie połączenie już istnieje. Sprawdź jego aktywność');
+        } else {
+            $this->login_model->AddConnect_m($idU, $idL);
+
         }
         redirect('System_controller/Patient_Worker');
     }

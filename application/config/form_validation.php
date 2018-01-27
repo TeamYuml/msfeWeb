@@ -76,6 +76,7 @@ $config = array(
             'label' => 'Nazwisko',
             'rules' => 'trim|required'
         ),
+
      
           array(
             'field' => 'miasto',
@@ -92,6 +93,13 @@ $config = array(
             'label' => 'Nr mieszkania/domu',
             'rules' => 'trim|required|alpha_numeric'
         ),
+
+        array(
+            'field' => 'adres',
+            'label' => 'Adres',
+            'rules' => 'trim|required'
+        ),
+
         array(
             'field' => 'telefon',
             'label' => 'Telefon',

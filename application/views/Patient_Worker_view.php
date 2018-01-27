@@ -29,6 +29,7 @@ and open the template in the editor.
             echo anchor('System_controller/Patient_Worker', 'Przypisz');
             echo anchor('System_controller/Patient_show', 'Pacjenci');
             echo anchor('System_controller/Worker_show', 'Pracownicy');
+
             ?>
             <div class="logout ">
                 <?php
@@ -44,9 +45,14 @@ and open the template in the editor.
                         <h1>Przypisani</h1>
                         <tr class="head">
 
+
                             <th>Pacjent</th>
                             <th>Pielęgniarka/az</th>
                             <th>Lekarz</th>
+
+                            <th>ID Lekarz</th>
+                            <th>ID User</th>
+
                             <th>Aktywny</th> 
                             <th>Przywróć</th>
                             <th>Usuń</th>
@@ -56,6 +62,7 @@ and open the template in the editor.
                         if (isset($msg)) {
                             echo '<div class="alert alert-danger"> <label>' . $msg . '</label></div>';
                         } else {
+
 
                             foreach ($test as $u):
                                 $userConnect = array($u->nazwiskoUser, $u->peselUser);
@@ -104,6 +111,38 @@ and open the template in the editor.
                                         echo form_button($delete);
                                         echo form_close();
                                         ?></td>
+
+                            foreach ($list2 as $u):
+                                ?>
+                                <tr class="conten">
+                                    <td> <?php echo $u->idLekarz_C ?></td>
+                                    <td><?php echo $u->idUser_C ?></td>
+                                    <td><?php echo $u->isActive ?></td>
+                                    <td><?php
+                        $res = array(
+                            'name' => 'conn',
+                            'value' => $u->ID_U,
+                            'type' => 'Submit',
+                            'content' => 'Przywróć',
+                            'id' => 'but'
+                        );
+                        echo form_open('System_controller/Connect_con');
+                        echo form_button($res);
+                        echo form_close();
+                                ?></td>
+                                    <td><?php
+                                $delete = array(
+                                    'name' => 'delete',
+                                    'value' => $u->ID_U,
+                                    'type' => 'Submit',
+                                    'content' => 'Usuń',
+                                    'id' => 'but'
+                                );
+                                echo form_open('System_controller/Delete_Connect');
+                                echo form_button($delete);
+                                echo form_close();
+                                ?></td>
+
                                 </tr>
                                 <br>
                                 <?php
@@ -115,11 +154,16 @@ and open the template in the editor.
                     </table>
                 </div>
             </div>
+
             <h1>Stwórz nowe połaczenie Lekarz - Pacjent</h1>
+
+            <h1>Stwórz nowe połaczenie</h1>
+
 
 
 
             <?php
+
             echo form_open('System_controller/AddLPP');
             echo "<p> Lekarzy </p>";
             echo "<select name='idlekarz'>";
@@ -140,6 +184,20 @@ and open the template in the editor.
             foreach ($list as $k):
 
                 echo" <option  value=" . $k->idUser . ">" . $k->nazwiskoUser . " - " . $k->peselUser . "</option>";
+
+            echo form_open('System_controller/AddConnect');
+            echo "<p> ID Lekarzy </p>";
+            echo "<select name='idlekarz'>";
+            foreach ($list as $k):
+                echo" <option value=" . $k->idUser . ">" . $k->idUser . "</option>";
+            endforeach;
+            echo "</select>";
+            echo "<br>";
+            echo "<p> ID Pacjentów </p>";
+            echo "<select name ='iduser'>";
+            foreach ($list3 as $k):
+                echo" <option  value=" . $k->idLekarz . ">" . $k->idLekarz . "</option>";
+
             endforeach;
             echo "</select>";
             $bAdd = array(
@@ -152,6 +210,7 @@ and open the template in the editor.
 
             echo form_close();
             ?>
+
         </div>
 
 

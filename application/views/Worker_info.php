@@ -59,6 +59,7 @@ and open the template in the editor.
                                     <td><?php echo $u->pesel; ?></td>
                                     <td><?php echo $u->loginLekarz; ?></td>
                                     <td><?php echo $u->telefonLekarza; ?></td>
+
                                 </tr>
                                 <br>
                                 <?php

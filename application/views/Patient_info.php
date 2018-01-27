@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,6 +23,7 @@ and open the template in the editor.
                 if ($this->session->userdata('user_loged') === TRUE) {
                     echo $this->session->userdata('imie_nazwisko_loged');
                 }
+
                 
                 echo anchor('System_controller/Patient_show', 'Powrót');
                 
@@ -42,6 +44,9 @@ and open the template in the editor.
             echo form_input($search);
             echo form_input($b_search);
             echo form_close();
+
+                echo anchor('System_controller/Patient_show', 'Powrót');
+
                 ?> </p>
             <div class="logout ">
                 <?php
@@ -73,6 +78,7 @@ and open the template in the editor.
                         } else {
 
                             foreach ($patient as $u):
+
                                 $Adres = array($u->MiastoUser,$u->UlicaUser,$u->NrmUser);
                                 $Adresimplode = implode(" - ",$Adres);
                                 ?>
@@ -84,10 +90,17 @@ and open the template in the editor.
                                     ?>
                                     <td><?php echo $u->imieUser; ?></td>
                                     <td><?php echo $u->nazwiskoUser; ?></td>
+
                                     <td><?php echo $Adresimplode ?></td>
                                     <td><?php echo $u->PESELUser; ?></td>
                                     <td><?php echo $u->emailUser; ?></td>
                                     <td><?php echo $u->telefonUser; ?></td>
+
+                                    <td><?php echo $u->adresUser; ?></td>
+                                    <td><?php echo $u->PESELUser; ?></td>
+                                    <td><?php echo $u->emailUser; ?></td>
+                                    <td><?php echo $u->telefonUser; ?></td>
+
                                 </tr>
                                 <br>
                                 <?php
@@ -98,5 +111,35 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+
+
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <table style="width:100%">
+            <tr>
+                <th>Imię</th>
+                <th>Nazwisko</th> 
+                <th>Adres</th>
+                <th>Telefon</th>
+                <th>PESEL</th>
+                <th>E-mail</th>
+            </tr>
+            <?php
+            foreach ($patient as $u):
+                ?>
+                <tr>
+                    <td><?php echo $u->imieUser; ?></td>
+                    <td><?php echo $u->nazwiskoUser; ?></td>
+                    <td><?php echo $u->adresUser; ?></td>
+                    <td><?php echo $u->PESELUser; ?></td>
+                    <td><?php echo $u->emailUser; ?></td>
+                    <td><?php echo $u->telefonUser; ?></td>
+                </tr>
+            </table>
+        <?php endforeach;
+        echo anchor('System_controller/Patient_show', 'Powrót');
+        ?>
     </body>
 </html>

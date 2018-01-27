@@ -29,6 +29,24 @@ and open the template in the editor.
             echo anchor('System_controller/Patient_Worker', 'Przypisz');
             echo anchor('System_controller/Patient_show', 'Pacjenci');
             echo anchor('System_controller/Worker_show', 'Pracownicy');
+
+            $search = array(
+                'name' => 'szukaj',
+                'placeholder' => 'PESEL',
+                'id' => 'search'
+            );
+            $b_search = array(
+                'name' => 'szukaj_b',
+                'value' => 'Wyszukaj',
+                'type' => 'submit',
+                'id' => 'search_id'
+            );
+            echo "<p>Wyszukaj:</p>";
+            echo form_open('System_controller/SearchW');
+            echo form_input($search);
+            echo form_input($b_search);
+            echo form_close();
+
             ?>
             <div class="logout ">
                 <?php
@@ -41,13 +59,18 @@ and open the template in the editor.
             <div class="table-responsive">
                 <div class="table">
                     <table  style="width:100%">
+
                         <h1>Lekarz</h1>
+
+                        <h1>Pracownicy</h1>
+
                         <tr class="head">
                             <th>ID</th>
                             <th>Aktywny</th>
                             <th>Imię</th>
                             <th>Nazwisko</th> 
                             <th>PESEL</th>
+
                             <th>Stanowisko</th>
                             <th>Usuń</th>
                             <th>Wyświetl dane</th>
@@ -65,8 +88,12 @@ and open the template in the editor.
                                     <td><?php echo $u->isActiveLekarz; ?> </td>
                                     <td><?php echo $u->imieLekarz; ?></td>
                                     <td><?php echo $u->nazwiskoLekarz; ?></td>
+
                                     <td><?php echo $u->pesel; ?></td>          
                                      <td><?php echo $u->Stanowisko; ?></td>          
+
+                                    <td><?php echo $u->pesel; ?></td>                              
+
                                     <td><?php
                                         $test_delete = array(
                                             'name' => 'delete',
@@ -113,6 +140,7 @@ and open the template in the editor.
                         }
                         ?>
                     </table>
+
                      <table  style="width:100%">
                         <h1>Pielegniarka/az</h1>
                         <tr class="head">

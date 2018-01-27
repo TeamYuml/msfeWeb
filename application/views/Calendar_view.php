@@ -32,6 +32,7 @@
                 if ($this->session->userdata('user_loged') === TRUE) {
                     echo $this->session->userdata('imie_nazwisko_loged');
                 }
+
                 $ButtonAddEvent = array(
                     'name' => 'addevent',
                     'value' => 'Dodaj',
@@ -42,6 +43,11 @@
                 );
                 echo form_input($ButtonAddEvent);
                 echo "<div class='back'>" . anchor('System_controller/Patient_show', 'Powrót') . "</div>";
+
+                echo "<div class='back'>" . anchor('System_controller/Patient_show', 'Powrót') . "</div>";
+                
+           
+
                 ?> </p>
 
 
@@ -79,7 +85,11 @@
                         <h4 class="modal-title" id="myModalLabel">Dodaj lek</h4>
                     </div>
                     <div class="modal-body">
+
                         <?php echo form_open(site_url("System_controller/add_event"), array("class" => "form-horizontal")); ?>
+
+                        <?php echo form_open(site_url("System_controller/add_event"), array("class" => "form-horizontal")) ?>
+
                         <div class="form-group">
                             <label for="p-in" class="col-md-4 label-heading">Nazwa leku</label>
                             <div class="col-md-8 ui-front">
@@ -104,12 +114,14 @@
                                 <input type="text" class="form-control fdp" name="end_date">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="p-in" class="col-md-4 label-heading">Godzina podania</label>
                             <div class="col-md-8">
                                 <input type="time" class="form-control " name="time" id="time">
                             </div>
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
@@ -154,12 +166,14 @@
                             </div>
                         </div>
                         <div class="form-group">
+
                             <label for="p-in" class="col-md-4 label-heading">Godzina podania</label>
                             <div class="col-md-8 ui-front">
                                 <input type="time" class="form-control" name="time" id="time">
                             </div>
                         </div>
                         <div class="form-group">
+
                             <label for="p-in" class="col-md-4 label-heading">Usuń</label>
                             <div class="col-md-8">
                                 <input type="checkbox" name="delete" value="1">
@@ -219,7 +233,9 @@
                             $('#end_date').val(moment(event.start).format('YYYY/MM/DD'));
                         }
                         $('#event_id').val(event.id);
+
                         $('#time').val(event.CzasPodania);
+
                         $('#editModal').modal();
                     },
                 });

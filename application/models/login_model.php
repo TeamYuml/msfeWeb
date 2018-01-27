@@ -63,6 +63,7 @@ class login_model extends CI_Model {
         $this->db->insert('lekarzmsfe', $lekarz);
     }
 
+
     public function registerNurse() {
         // pobieranie hasla
         $password = $this->input->post('pwd');
@@ -83,15 +84,28 @@ class login_model extends CI_Model {
 
     public function patientshow() {
         $id = $this->session->userdata('id_loged');
+
+    public function patientshow() {
+        $id = $this->session->userdata('id_loged');
+
+
         $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser, d.isActiveUser');
         $this->db->from('usermsfe as d, userconnect as p ');
         $this->db->where('d.idUser = p.idUser_C');
         $this->db->where(array('p.idLekarz_C' => $id,
+
+
+        $this->db->select('d.idUser, d.imieUser, d.nazwiskoUser, d.PESELUser');
+        $this->db->from('usermsfe as d, userconnect as p ');
+        $this->db->where('d.idUser = p.idUser');
+        $this->db->where(array('p.idLekarz' => $id,
+
             'd.isActiveUser' => 1));
         $query = $this->db->get();
         $de = $query->result();
         return $de;
     }
+
 
     public function patientshow_a() {
         $this->db->select('*');
@@ -109,6 +123,7 @@ class login_model extends CI_Model {
         return $de;
     }
 
+
     public function workerNshow() {
         $this->db->select('*')->from('pielegniarkamsfe');
         $query = $this->db->get();
@@ -122,6 +137,17 @@ class login_model extends CI_Model {
         $this->db->set(array('isActive' => 0));
         $d = $this->db->update('userconnect');
 
+    public function Deletedpatient($id_delete) {
+
+        $this->db->where(array('idUser_C' => $id_delete));
+
+    public function Deletedpatient($id_delete) {
+
+        $this->db->where(array('idUser' => $id_delete));
+
+        $d = $this->db->delete('userconnect');
+
+
         $this->db->where(array('idUser' => $id_delete));
         $this->db->set(array('isActiveUser' => 0));
         $up = $this->db->update('usermsfe');
@@ -130,6 +156,7 @@ class login_model extends CI_Model {
             'delete' => $d);
         return $res;
     }
+
 
     public function Deletedworker($id_delete) {
 
@@ -144,6 +171,7 @@ class login_model extends CI_Model {
             'delete' => $d);
         return $res;
     }
+
     
       public function DeletedworkerN($id_delete) {
 
@@ -159,6 +187,7 @@ class login_model extends CI_Model {
         return $res;
     }
 
+
     public function Search_P() {
         $this->db->select('*');
         $this->db->from('usermsfe');
@@ -172,6 +201,12 @@ class login_model extends CI_Model {
     public function Search_U() {
         $this->db->select('*');
         $this->db->from('usermsfe');
+
+    public function Search_P() {
+        $this->db->select('*');
+        $this->db->from('usermsfe');
+
+
         $this->db->where(array('PESELUser' => $this->input->post('szukaj')));
         $query = $this->db->get();
         $de = $query->result();
@@ -186,6 +221,7 @@ class login_model extends CI_Model {
         $de = $query->result();
         return $de;
     }
+
 
     public function Patient_info_m() {
         $this->db->select('*');
@@ -204,6 +240,7 @@ class login_model extends CI_Model {
         $result = $query->result();
         return $result;
     }
+
     
      public function Worker_info_N() {
         $this->db->select('*');
@@ -214,6 +251,7 @@ class login_model extends CI_Model {
         return $result;
     }
 
+
     public function Patientadd_m($gen_password) {
         $hashedPassword = $this->hashPassword($gen_password);
         $patinet = array(
@@ -221,9 +259,12 @@ class login_model extends CI_Model {
             'nazwiskoUser' => $this->input->post('nazwisko'),
             'emailUser' => $this->input->post('login'),
             'hasloUser' => $hashedPassword,
+
             'miastoUser' => $this->input->post('miasto'),
             'ulicaUser' => $this->input->post('ulica'),
             'NrmUser' => $this->input->post('nrm'),
+            'adresUser' => $this->input->post('adres'),
+
             'PESELUser' => $this->input->post('pesel'),
             'telefonUser' => $this->input->post('telefon')
         );
@@ -241,8 +282,18 @@ class login_model extends CI_Model {
 
     public function ConnectUser_m($newid) {
         $patientconnect = array(
+
             'idUser_C' => $newid,
             'idLekarz_C' => $this->session->userdata('id_loged')
+
+
+            'idUser_C' => $newid,
+            'idLekarz_C' => $this->session->userdata('id_loged')
+
+            'idUser' => $newid,
+            'idLekarz' => $this->session->userdata('id_loged')
+
+
         );
         $this->db->insert('userconnect', $patientconnect);
     }
@@ -269,6 +320,15 @@ class login_model extends CI_Model {
     }
 
     public function Przywroc_worker($id) {
+
+        /* $this->db->where
+          UPDATE lekarzmsfe
+          SET isActiveLekarz = 1
+          WHERE idLekarz = 62
+         * 
+         */
+
+
         $this->db->where(array('idLekarz' => $id));
         $this->db->set(array('isActiveLekarz' => 1));
         $up = $this->db->update('lekarzmsfe');
@@ -276,6 +336,7 @@ class login_model extends CI_Model {
         $res = array('update' => $up);
         return $res;
     }
+
     
         public function Przywroc_workerN($id) {
         $this->db->where(array('idP' => $id));
@@ -285,6 +346,7 @@ class login_model extends CI_Model {
         $res = array('update' => $up);
         return $res;
     }
+
 
     public function Przywroc_patient($id) {
         $this->db->where(array('idUser' => $id));
@@ -298,7 +360,12 @@ class login_model extends CI_Model {
     public function AllID_list() {
 
 
+
         $this->db->select('idUser,peselUser,nazwiskoUser');
+
+
+        $this->db->select('idUser');
+
         $this->db->from('usermsfe');
         $this->db->where(['isActiveUser' => 1]);
         $query = $this->db->get();
@@ -307,13 +374,18 @@ class login_model extends CI_Model {
     }
 
     public function ID_L() {
+
         $this->db->select('idLekarz, imieLekarz,nazwiskoLekarz');
+
+        $this->db->select('idLekarz');
+
         $this->db->from('lekarzmsfe');
         $this->db->where(['isActiveLekarz' => 1]);
         $query = $this->db->get();
         $res = $query->result();
         return $res;
     }
+
 
     public function IDNurse() {
         $this->db->select('idP, imieP,nazwiskoP');
@@ -323,6 +395,7 @@ class login_model extends CI_Model {
         $res = $query->result();
         return $res;
     }
+
 
     public function getA() {
         $this->db->select('*');
@@ -350,14 +423,22 @@ class login_model extends CI_Model {
         return $res;
     }
 
+
     public function AddConnect_LPP($idU, $idL, $idN) {
         $add = array(
             'idUser_C' => $idU,
             'idLekarz_C' => $idL,
             'idP_C' => $idN
+
+    public function AddConnect_m($idU, $idL) {
+        $add = array(
+            'idUser_C' => $idU,
+            'idLekarz_C' => $idL
+
         );
         $this->db->insert('userconnect', $add);
     }
+
 
     public function UpdateConnect_LPP($idU, $idL) {
 
@@ -393,9 +474,16 @@ class login_model extends CI_Model {
         $this->db->where(['idUser_C' => $idU,
             'idP_C' => $idN,
             'idLekarz_C' > 0]);
+
+    public function check($idU, $idL) {
+        $this->db->select('*');
+        $this->db->from('userconnect');
+        $this->db->where(['idUser_C' => $idU,
+            'idLekarz_C' => $idL]);
         $query = $this->db->get();
         return $query;
     }
+
 
     public function Nurseall() {
         $this->db->select('*')->from('pielegniarkamsfe')->where('isActive' == 1);
@@ -417,5 +505,6 @@ class login_model extends CI_Model {
         $res = $query->result();
         return $res;
     }
+
 
 }
