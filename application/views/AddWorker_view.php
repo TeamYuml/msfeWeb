@@ -57,7 +57,11 @@
                                 <input  class="form-control" placeholder="E-mail" type="email" name="login"
                                         value="<?php echo set_value('login'); ?>"/>
                             </div>
+
+                            <div class="form-group float-label-control">
+
                              <div class="form-group float-label-control">
+
                                 <label for="pwd">Hasło:</label>
                                 <input  class="form-control" placeholder="Hasło" type="text" name="pwd"
                                         value="<?php echo set_value('pwd'); ?>"/>
@@ -72,7 +76,11 @@
                                 <input  class="form-control" placeholder="Nazwisko" type="text" name="nazwisko"
                                         value="<?php echo set_value('nazwisko'); ?>"/>
                             </div>
+
+                            <div class="form-group float-label-control">
+
                               <div class="form-group float-label-control">
+
                                 <label for="miasto">Miasto:</label>
                                 <input class="form-control" placeholder="Miasto" type="text" name="miasto"
                                        value="<?php echo set_value('miasto'); ?>"/>
@@ -92,6 +100,14 @@
                                 <input  class="form-control" placeholder="Telefon" type="number" name="telefon"
                                         value="<?php echo set_value('telefon'); ?>"/>
                             </div>
+
+                            <div class="form-group ">
+                                <label for="stanowisko">Stanowisko:</label><br>
+                                <input type="radio" name="stanowisko" value="Lekarz" checked>Lekarz<br>
+                                <input type="radio" name="stanowisko" value="Pielegniarka/az"> Pielęgniarka/aż
+                            </div>
+
+
                             <input id="but" type="submit" value="Zatwierdz" name="regi"/>
                             <?php
                             echo form_close();

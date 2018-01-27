@@ -52,14 +52,13 @@ and open the template in the editor.
                             foreach ($worker as $u):
                                 ?>
                                 <tr class="conten">
-                                    <td><?php echo $u->idLekarz; ?></td>
-                                    <td><?php echo $u->imieLekarz; ?></td>
-                                    <td><?php echo $u->nazwiskoLekarz; ?></td>
-                                    <td><?php echo $u->miejscepracyLekarz; ?></td>
+                                    <td><?php echo $u->idP; ?></td>
+                                    <td><?php echo $u->imieP; ?></td>
+                                    <td><?php echo $u->nazwiskoP; ?></td>
+                                    <td><?php echo $u->miejscepracy; ?></td>
                                     <td><?php echo $u->pesel; ?></td>
-                                    <td><?php echo $u->loginLekarz; ?></td>
-                                    <td><?php echo $u->telefonLekarza; ?></td>
-
+                                    <td><?php echo $u->email; ?></td>
+                                    <td><?php echo $u->telefon; ?></td>
                                 </tr>
                                 <br>
                                 <?php

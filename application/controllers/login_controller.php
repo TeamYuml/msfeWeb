@@ -33,6 +33,7 @@ class Login_controller extends CI_Controller {
     public function login_show() {
         $this->load->view('Login_view');
 
+
     }
 
     public function login() {
@@ -53,7 +54,11 @@ class Login_controller extends CI_Controller {
 
             $imie_nazwisko = $row->imieLekarz . ' ' . $row->nazwiskoLekarz;
 
+
+            $imie_nazwisko = $row->imieLekarz . ' ' . $row->nazwiskoLekarz;
+
             $imie_nazwisko = $row->imieLekarz.' '.$row->nazwiskoLekarz;
+
 
             $user_data = array(
                 'user_loged' => TRUE,
@@ -69,6 +74,7 @@ class Login_controller extends CI_Controller {
             } else {
                 redirect('System_controller/Patient_show');
             }
+
 
             redirect('System_controller/Patient_show');
 
@@ -106,13 +112,40 @@ class Login_controller extends CI_Controller {
     public function register() {
         $db = $this->input->post('regi');
 
+        
+        if($this->input->post('stanowisko') == 'Lekarz'){
+            if (isset($db)){
+                if($this->form_validation->run('register') === FALSE ) {
+
+
         if (isset($db)) {
             $this->load->library('form_validation');
             if ($this->form_validation->run('register') === FALSE) {
+
                 $this->load->view('AddWorker_view');
             } else {
                 $this->load->model('login_model');
                 $result = $this->login_model->register();
+
+               redirect('System_controller/Worker_show');
+            }
+        }
+        }
+        else{
+            if (isset($db)){ 
+                if($this->form_validation->run('register') === FALSE){
+                $this->load->view('AddWorker_view');
+            } else {
+                $this->load->model('login_model');
+                $result = $this->login_model->registerNurse();
+               redirect('System_controller/Worker_show');
+            }
+        }
+        }
+    }
+
+    public function Logout() {
+
                 $this->load->view('AddWorker_view');
             }
         }
@@ -134,6 +167,7 @@ class Login_controller extends CI_Controller {
     }
     
     public function Logout(){
+
 
         $this->session->unset_userdata('imie_nazwisko_loged');
         $this->session->unset_userdata('user_loged');

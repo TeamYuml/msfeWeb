@@ -52,6 +52,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 $route['default_controller'] = 'login_controller/login_show';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
+    $route['android/register'] = 'android/register';
+
+$route['android/getHarmonogram'] = 'android/getHarmonogram';
+
+$route['android/login'] = 'android/login';
+
+
+$route['default_controller'] = 'login_controller/login_show';
 $route['default_controller'] = 'login_controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
