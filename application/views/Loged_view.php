@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE HTML> 
 <html>
     <head>
@@ -50,6 +52,7 @@
             </div>
         </div>
 
+
         <div class = "main">
             <div class="table-responsive">
                 <div class="table">
@@ -73,8 +76,7 @@
                                     <td><?php echo $u->imieUser; ?></td>
                                     <td><?php echo $u->nazwiskoUser; ?></td>
                                     <td><?php echo $u->PESELUser; ?></td>
-                                   <!-- <td><?php //echo anchor('System_controller/Calendar_show', 'Wyświetl ');                    ?></td>-->
-                                    <td><?php
+                 <td><?php
                                         $harmonogram = array(
                                             'name' => 'harmo',
                                             'value' => $u->idUser,
@@ -87,7 +89,11 @@
                                         echo form_close();
                                         ?></td>
                                     <td><?php
+
+                                        $deleteUser = array(
+
                                         $test_delete = array(
+
                                             'name' => 'delete',
                                             'value' => $u->idUser,
                                             'type' => 'Submit',
@@ -95,7 +101,11 @@
                                             'id' => 'but'
                                         );
                                         echo form_open('System_controller/Delete_Confirm');
+
+                                        echo form_button($deleteUser);
+
                                         echo form_button($test_delete);
+ 
                                         echo form_close();
                                         ?></td>
                                     <td><?php
@@ -124,6 +134,7 @@
 
 
     </body>
+
 
         <!--<link href="<?php echo base_url('css/login_style.css'); ?>" rel="stylesheet">-->
         <title>Logowanie</title>
@@ -208,5 +219,6 @@
     </body>
     <footer>
     </footer>
+
 
 </html>

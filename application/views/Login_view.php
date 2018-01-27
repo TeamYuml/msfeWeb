@@ -32,7 +32,12 @@
                 'placeholder' => 'Hasło',
                 'type' => 'password'
 
+
+                'placeholder' => 'Hasło',
+                'type' => 'password'
+
                 'placeholder' => 'Hasło'
+
 
             );
             $button = array(
@@ -50,8 +55,7 @@
             ?>
       
             <?php
-        //    echo form_open('user/register_show');
-    //            echo anchor('login_controller/register_show', 'Rejestracja');
+  
             ?>
             
         </div>

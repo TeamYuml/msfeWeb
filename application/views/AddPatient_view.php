@@ -13,6 +13,7 @@
         <!--   <?php
         echo validation_errors();
         echo form_open('System_controller/AddPatient');
+
         ?>
            <label for="login">Email:</label>
            <input type="text" name="login"
@@ -40,6 +41,7 @@
            <br />
            <input type="submit" value="Zatwierdz" name="ok"/>
         <?php
+
         echo form_close();
         echo anchor('System_controller/Patient_show', 'Powrót');
         ?> -->
@@ -97,9 +99,24 @@
                                         value="<?php echo set_value('nazwisko'); ?>"/>
                             </div>
                             <div class="form-group float-label-control">
-                                <label for="adres">Adres:</label>
+
+                                <label for="miasto">Miasto:</label>
+                                <input class="form-control" placeholder="Miasto" type="text" name="miasto"
+                                       value="<?php echo set_value('miasto'); ?>"/>
+                            </div>
+                              <div class="form-group float-label-control">
+                                <label for="ulica">Ulica:</label>
+                                <input class="form-control" placeholder="Ulica" type="text" name="ulica"
+                                       value="<?php echo set_value('ulica'); ?>"/>
+                            </div>
+                              <div class="form-group float-label-control">
+                                <label for="nrm">Nr mieszkania/domu:</label>
+                                <input class="form-control" placeholder="Nr mieszkania/domu" type="number" name="nrm"
+                                       value="<?php echo set_value('nrm'); ?>"/>
+                      <label for="adres">Adres:</label>
                                 <input class="form-control" placeholder="Adres" type="text" name="adres"
                                        value="<?php echo set_value('adres'); ?>"/>
+
                             </div>
                             <div class="form-group float-label-control">
                                 <label for="pesel">Pesel:</label>
@@ -124,6 +141,8 @@
                 </div>
             </div>
         </div>
+
+
 
 
     </head>
@@ -160,6 +179,7 @@
         <?php echo form_close();
         echo anchor('System_controller/Patient_show', 'Powrót');
         ?> 
+
 
     </body>
 </html>

@@ -23,7 +23,30 @@ and open the template in the editor.
                 if ($this->session->userdata('user_loged') === TRUE) {
                     echo $this->session->userdata('imie_nazwisko_loged');
                 }
+
+                
                 echo anchor('System_controller/Patient_show', 'Powrót');
+                
+                
+                $search = array(
+                'name' => 'szukaj',
+                'placeholder' => 'PESEL',
+                'id' => 'search'
+            );
+            $b_search = array(
+                'name' => 'szukaj_b',
+                'value' => 'Wyszukaj',
+                'type' => 'submit',
+                'id' => 'search_id'
+            );
+            echo "<p>Wyszukaj:</p>";
+            echo form_open('System_controller/SearchP_info');
+            echo form_input($search);
+            echo form_input($b_search);
+            echo form_close();
+
+                echo anchor('System_controller/Patient_show', 'Powrót');
+
                 ?> </p>
             <div class="logout ">
                 <?php
@@ -55,6 +78,9 @@ and open the template in the editor.
                         } else {
 
                             foreach ($patient as $u):
+
+                                $Adres = array($u->MiastoUser,$u->UlicaUser,$u->NrmUser);
+                                $Adresimplode = implode(" - ",$Adres);
                                 ?>
                                 <tr class="conten">
                                     <?php
@@ -64,13 +90,16 @@ and open the template in the editor.
                                     ?>
                                     <td><?php echo $u->imieUser; ?></td>
                                     <td><?php echo $u->nazwiskoUser; ?></td>
-                                    <td><?php echo $u->adresUser; ?></td>
+
+                                    <td><?php echo $Adresimplode ?></td>
                                     <td><?php echo $u->PESELUser; ?></td>
                                     <td><?php echo $u->emailUser; ?></td>
                                     <td><?php echo $u->telefonUser; ?></td>
 
-
-
+                                    <td><?php echo $u->adresUser; ?></td>
+                                    <td><?php echo $u->PESELUser; ?></td>
+                                    <td><?php echo $u->emailUser; ?></td>
+                                    <td><?php echo $u->telefonUser; ?></td>
 
                                 </tr>
                                 <br>
@@ -82,6 +111,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+
 
         <meta charset="UTF-8">
         <title></title>
@@ -111,7 +141,5 @@ and open the template in the editor.
         <?php endforeach;
         echo anchor('System_controller/Patient_show', 'Powrót');
         ?>
-
-
     </body>
 </html>

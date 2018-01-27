@@ -76,11 +76,30 @@ $config = array(
             'label' => 'Nazwisko',
             'rules' => 'trim|required'
         ),
+
+     
+          array(
+            'field' => 'miasto',
+            'label' => 'Miasto',
+            'rules' => 'trim|required'
+        ),
+          array(
+            'field' => 'ulica',
+            'label' => 'Ulica',
+            'rules' => 'trim|required'
+        ),
+          array(
+            'field' => 'nrm',
+            'label' => 'Nr mieszkania/domu',
+            'rules' => 'trim|required|alpha_numeric'
+        ),
+
         array(
             'field' => 'adres',
             'label' => 'Adres',
             'rules' => 'trim|required'
         ),
+
         array(
             'field' => 'telefon',
             'label' => 'Telefon',
