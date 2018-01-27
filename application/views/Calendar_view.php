@@ -107,7 +107,7 @@
                         <div class="form-group">
                             <label for="p-in" class="col-md-4 label-heading">Godzina podania</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control " name="time" id="time">
+                                <input type="time" class="form-control " name="time" id="time">
                             </div>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                         <div class="form-group">
                             <label for="p-in" class="col-md-4 label-heading">Godzina podania</label>
                             <div class="col-md-8 ui-front">
-                                <input type="text" class="form-control" name="time" id="time">
+                                <input type="time" class="form-control" name="time" id="time">
                             </div>
                         </div>
                         <div class="form-group">

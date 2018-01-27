@@ -24,7 +24,10 @@ class Android extends CI_Controller
         $imie = $this->input->post('imie');
         $nazwisko = $this->input->post('nazwisko');
         $pesel = $this->input->post('pesel');
-        $adres = $this->input->post('adres');
+        $miasto = $this->input->post('miasto');
+        $ulica = $this->input->post('ulica');
+        $nrm = $this->input->post('nrm');
+        $telefon = $this->input->post('telefon');
 
         // Selectowanie emaila w celu sprawdzenia czy taki jest juz w DB
         $this->db->select('emailUser');
@@ -55,10 +58,10 @@ class Android extends CI_Controller
                     'imieUser' => $imie,
                     'nazwiskoUser' => $nazwisko,
                     'PESELUser' => $pesel,
-                    'MiastoUser' => $adres,
-                    'telefonUser' =>'123333333',
-                    'UlicaUser' => 'FAJNE',
-                    'NrmUser' =>'12', 
+                    'MiastoUser' => $miasto,
+                    'telefonUser' => $telefon,
+                    'UlicaUser' => $ulica,
+                    'NrmUser' => $nrm, 
                     
                 );
 
@@ -93,7 +96,7 @@ class Android extends CI_Controller
         $this->db->where('IDUser', $userID);
         $query = $this->db->get('calendar_events');
 
-        if ($query->num_rows() != 1) {
+        if ($query->num_rows() < 1) {
             echo "Brak harmonogramu";
             // log something here
         } else {
@@ -115,7 +118,7 @@ class Android extends CI_Controller
             } else {
                 // wyswietlenie lekow oraz godziny ich pobrania
                 foreach ($query->result() as $row) {
-                    echo $row->CzasPodania . ":".
+                    echo $row->CzasPodania . "-" .
                         $row->title . ",";
                 }
             }
@@ -150,5 +153,28 @@ class Android extends CI_Controller
             }
         }
     }
+
+    
+public function pielegniarka() {
+    $this->db->select('usermsfe.imieUser, usermsfe.nazwiskoUser,usermsfe.PESELUser,
+        calendar_events.ID,calendar_events.title,calendar_events.start, calendar_events.end,
+        calendar_events.description,calendar_events.IDUser,calendar_events.CzasPodania')
+    ->from('calendar_events,usermsfe,userconnect')
+    ->where('calendar_events.IDUser = usermsfe.idUser')
+    ->where('userconnect.idP_C >', 0)
+    ->where('usermsfe.idUser =userconnect.idUser_C');
+    $query = $this->db->get();
+    
+    if ($query->num_rows() == 0) {
+        echo "Zadnych wynikow";
+    } else {
+        foreach($query->result() as $row) {
+            $tem = $row;
+            $json = json_encode($tem);
+            echo $json .  "=";
+        }
+    }
+}
+
 }
 

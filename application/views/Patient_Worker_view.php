@@ -44,9 +44,9 @@ and open the template in the editor.
                         <h1>Przypisani</h1>
                         <tr class="head">
 
-                            <th>ID Pacjent</th>
-                            <th>ID Pielęgniarka/az</th>
-                            <th>ID Lekarz</th>
+                            <th>Pacjent</th>
+                            <th>Pielęgniarka/az</th>
+                            <th>Lekarz</th>
                             <th>Aktywny</th> 
                             <th>Przywróć</th>
                             <th>Usuń</th>
@@ -121,21 +121,21 @@ and open the template in the editor.
 
             <?php
             echo form_open('System_controller/AddLPP');
-            echo "<p> ID Lekarzy </p>";
+            echo "<p> Lekarzy </p>";
             echo "<select name='idlekarz'>";
             foreach ($list3 as $k):
                 echo" <option value=" . $k->idLekarz . ">" . $k->imieLekarz . " " . $k->nazwiskoLekarz . "</option>";
             endforeach;
             echo "</select>";
             echo "<br>";
-            echo "<p> ID Pielegniarka/aż </p>";
+            echo "<p> Pielegniarka/aż </p>";
             echo "<select name='idnurse'>";
             echo"<option value='nd'>nd.</option>";
             foreach ($list4 as $k):
                 echo" <option value=" . $k->idP . ">" . $k->imieP . " " . $k->nazwiskoP . "</option>";
             endforeach;
             echo "</select>";
-            echo "<p> ID Pacjentów </p>";
+            echo "<p> Pacjentów </p>";
             echo "<select name ='iduser'>";
             foreach ($list as $k):
 
